@@ -13,7 +13,9 @@ class QueryUrlBuilderServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('query-url-builder', function ($app) {
+            return new QueryUrlBuilder();
+        });
     }
 
     /**

@@ -4,7 +4,7 @@
 namespace Forrestedw\QueryUrlBuilder;
 
 
-class QueryUrlManager
+class QueryUrlBuilder
 {
     /**
      * The query's filter value(s)
