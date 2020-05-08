@@ -19,42 +19,39 @@ $queryUrl = queryUrl();
 ### Sort
 #### Set a sort
 ```php
-queryUrl()->sortBy('name')->build();
-// returns http://example.text/?sort=name
+queryUrl()->sortBy('name')->build(); // http://example.test/?sort=name
 ```
 
 #### Access the sort
 ```php
-// On page  http://example.text/?sort=name
+// On page  http://example.test/?sort=name
+
 queryUrl()->sort === 'name' // true
 ```
 
 #### Reverse the sort
 ```php
-// On page http://exmaple.text/?sort=name
+// On page http://example.test/?sort=name
 
-queryUrl()->reverseSort()->build();
-// returns http://example.text/?sort=-name
+queryUrl()->reverseSort()->build(); // http://example.test/?sort=-name
 
 
-// On page http://exmaple.text/?sort=-name
+// On page http://example.test/?sort=-name 
 
-queryUrl()->reverseSort()->build();
-// returns http://example.text/?sort=name
+queryUrl()->reverseSort()->build(); // http://example.test/?sort=name
 ```
 
 #### Remove a sort
 ```php
-// On page http://exmaple.text/?sort=name
+// On page http://example.test/?sort=name
 
-queryUrl()->removeSort()->build();
-// returns http://example.text/
+queryUrl()->removeSort()->build(); // http://example.test/
 ```
 
 ### Filter
 #### Check if a filter is set
 ```php
-// On page http://example.text/?filter[name]=Joe
+// On page http://example.test/?filter[name]=Joe
 
 queryUrl()->hasFilter('name') // true
 
@@ -63,21 +60,16 @@ queryUrl()->hasFilter('email') // false
 
 #### Set filters
 ```php
-queryUrl()->setFilter('active', true)->build() //
-// returns http://example.text/?filter[active]=true
+queryUrl()->setFilter('active', true)->build() // http://example.test/?filter[active]=true
 
-queryUrl()->setFilter('active', true)->setFilter('valid', false)->setFilter('name','John')->build()
-
-// returns http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
+queryUrl()->setFilter('active', true)->setFilter('valid', false)->setFilter('name','John')->build() // returns http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
 ```
 
 #### Remove a filter
 ```php
 // On page http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
 
-queryUrl()->removeFilter('active')->build();
-
-// returns http://example.test/?&filter[valid]=0&filter[name]=John
+queryUrl()->removeFilter('active')->build(); // http://example.test/?&filter[valid]=0&filter[name]=John
 ```
 ____
 ### Using in blade
@@ -93,11 +85,17 @@ The following example will create a link that cycles through three states of bei
 
 ```php
 @if(queryUrl()->sort === 'name')
+
     <a href="{{ queryUrl()->reserveSort()->build() }}">Name - showing A-Z</a>
+
 @elseif(queryUrl()->sort === '-name')
+
     <a href="{{ queryUrl()->removeSort()->build() }}">Name - showing Z-A</a>
+
 @else
+
     <a href="{{ queryUrl()->sortBy('name')->build() }}">Name - showing unsorted</a>
+
 @endif
 ```
 The url text shows what sort the user will currently be seeing. The link will take the user to the next sort state.
@@ -111,11 +109,17 @@ A similar approach is taken for boolean value filtering, and cycling through the
 
 ```php
 @if(! queryUrl()->hasFilter('active'))
+
     <a href="{{ queryUrl()->setFilter('active', true)->build() }}">Active - showing all (no filter applied)</a>
+
 @elseif(queryUrl()->filter('active') === true)
+
     <a href="{{ queryUrl()->setFilter('active', false)->build() }}">Active - showing true only</a>
+
 @else
+
     <a href="{{ queryUrl()->removeFilter('active')->build() }}">Active - showing false only</a>
+
 @endif
 ```
 
