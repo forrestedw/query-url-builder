@@ -55,6 +55,19 @@ class QueryUrl
         return $this;
     }
 
+    public function removeFilters($filters)
+    {
+        if ($this->isAssociativeArray($filters)) {
+            $filters = array_keys($filters);
+        }
+
+        foreach ($filters as $filter) {
+            $this->removeFilter($filter);
+        }
+
+        return $this;
+    }
+
     /**
      * Whether a query has a given filter.
      *
