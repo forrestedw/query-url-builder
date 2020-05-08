@@ -1,7 +1,7 @@
 {
     "name": "forrestedw/query-url-builder",
     "description": "A one class package to simplify manipulating front end query urls",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
