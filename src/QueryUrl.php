@@ -55,6 +55,13 @@ class QueryUrl
         return $this;
     }
 
+    /**
+     * Removes multiple filters from a query.
+     *
+     * @param $filters
+     *
+     * @return $this
+     */
     public function removeFilters($filters)
     {
         if ($this->isAssociativeArray($filters)) {
@@ -102,6 +109,13 @@ class QueryUrl
         return $this;
     }
 
+    /**
+     * Adds multiple filters to the query.
+     *
+     * @param array $filters
+     *
+     * @return $this
+     */
     public function setFilters(array $filters)
     {
         if ($this->isAssociativeArray($filters)) {
@@ -166,6 +180,13 @@ class QueryUrl
         return request()->url().'/?'.str_replace($entities, $replacements, http_build_query((array) $this));
     }
 
+    /**
+     * Checks if array is of type associative or sequential.
+     *
+     * @param array $input
+     *
+     * @return bool
+     */
     private function isAssociativeArray(array $input)
     {
         return array_keys($input) !== range(0, count($input) - 1);
