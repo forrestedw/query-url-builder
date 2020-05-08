@@ -90,7 +90,10 @@ queryUrl()->removeFilter('active')->build(); // http://example.test/?&filter[val
 
 queryUrl()->add('active', true)->sortBy('-email')->build(); // http://example.test/?&filter[active]=1&sort=-email, ie active users sorted by email DESC
 ```
+
 ____
+
+
 ### Using in blade
 Use the `queryUrl()` in your blade files like below.
 
@@ -142,7 +145,12 @@ A similar approach is taken for boolean value filtering, and cycling through the
 @endif
 ```
 
+____
+
+
+# Next steps
 I plan to add blade components that will look a bit like then following two examples, which would generate the two sets of example blade links above:
+
 ```php
 <x-query-url-links :type="sort" :attribute="name" :base-class="btn rounded ml-3" :active="btn-primary shadow-sm" :inactive="btn-secondary" />
 
