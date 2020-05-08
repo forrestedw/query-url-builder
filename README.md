@@ -1,5 +1,11 @@
-# Easy query url manipiulation 
-This package is designed to complement [spatie/laravel-query-builder](https://docs.spatie.be/laravel-query-builder). The package is helpful for the back end, but manipulating the urls for the front end for use in blade can be verbose. This package makes it very simple to change query parameters to make sorting easy.
+# Easy query url building
+This packages makes it easy to make the links necessary for use in the front en with [spatie/laravel-query-builder](https://docs.spatie.be/laravel-query-builder). The package is amazing helpful for the back end, and the front end is outside of the scope of the project. Creating the links for the front end can be verbose. This package makes it easy.
+
+## Installation
+```bash
+$ composer require forrestedw\query-url-builder
+```
+
 
 ## Basic usage
 For greatest convenience, create a helper function:
@@ -19,7 +25,9 @@ $queryUrl = queryUrl();
 ### Sort
 #### Set a sort
 ```php
-queryUrl()->sortBy('name')->build(); // http://example.test/?sort=name
+queryUrl()->sortBy('name')->build(); // http://example.test/?sort=name, ie name ASC
+
+queryUrl()->sortBy('-name')->build(); // http://example.test/?sort=-name, ie name DESC
 ```
 
 #### Access the sort
@@ -27,18 +35,20 @@ queryUrl()->sortBy('name')->build(); // http://example.test/?sort=name
 // On page  http://example.test/?sort=name
 
 queryUrl()->sort === 'name' // true
+
+queryUrl()->sort === '-name' // false
 ```
 
 #### Reverse the sort
 ```php
 // On page http://example.test/?sort=name
 
-queryUrl()->reverseSort()->build(); // http://example.test/?sort=-name
+queryUrl()->reverseSort()->build(); // http://example.test/?sort=-name, ie ASC goes to DESC
 
 
 // On page http://example.test/?sort=-name 
 
-queryUrl()->reverseSort()->build(); // http://example.test/?sort=name
+queryUrl()->reverseSort()->build(); // http://example.test/?sort=name, ie DESC goes to ASC
 ```
 
 #### Remove a sort
@@ -60,7 +70,9 @@ queryUrl()->hasFilter('email') // false
 
 #### Set filters
 ```php
-queryUrl()->setFilter('active', true)->build() // http://example.test/?filter[active]=true
+queryUrl()->setFilter('active', true)->build() // http://example.test/?filter[active]=1
+
+queryUrl()->setFilter('active', false)->build() // http://example.test/?filter[active]=0
 
 queryUrl()->setFilter('active', true)->setFilter('valid', false)->setFilter('name','John')->build() // returns http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
 ```
@@ -70,6 +82,13 @@ queryUrl()->setFilter('active', true)->setFilter('valid', false)->setFilter('nam
 // On page http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
 
 queryUrl()->removeFilter('active')->build(); // http://example.test/?&filter[valid]=0&filter[name]=John
+```
+
+#### Combine various `sort` and `filter` options
+```php
+// On page http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
+
+queryUrl()->add('active', true)->sortBy('-email')->build(); // http://example.test/?&filter[active]=1&sort=-email, ie active users sorted by email DESC
 ```
 ____
 ### Using in blade
@@ -121,6 +140,13 @@ A similar approach is taken for boolean value filtering, and cycling through the
     <a href="{{ queryUrl()->removeFilter('active')->build() }}">Active - showing false only</a>
 
 @endif
+```
+
+I plan to add blade components that will look a bit like then following two examples, which would generate the two sets of example blade links above:
+```php
+<x-query-url-links :type="sort" :attribute="name" :base-class="btn rounded ml-3" :active="btn-primary shadow-sm" :inactive="btn-secondary" />
+
+<x-query-url-links :type="boolFilter" :attribute="active" :base-class="btn rounded ml-3" :active="btn-primary shadow-sm" :inactive="btn-secondary" />
 ```
 
 
