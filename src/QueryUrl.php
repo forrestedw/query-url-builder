@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Forrestedw\QueryUrlBuilder;
-
 
 class QueryUrl
 {
@@ -29,15 +27,17 @@ class QueryUrl
      * The value of a filter in the query.
      *
      * @param $filter
+     *
      * @return bool
      */
     public function filter($filter)
     {
         $value = $this->filter[$filter];
 
-        if($value == '1' || $value == '0') {
-            return (boolean)$value;
+        if ($value == '1' || $value == '0') {
+            return (boolean) $value;
         }
+
         return $value;
     }
 
@@ -45,6 +45,7 @@ class QueryUrl
      * Remove a filter from the query.
      *
      * @param $filter
+     *
      * @return $this
      */
     public function removeFilter($filter)
@@ -58,16 +59,18 @@ class QueryUrl
      * Whether a query has a given filter.
      *
      * @param string $filter
+     *
      * @return bool
      */
-    public function hasFilter(string $filter) : bool
+    public function hasFilter(string $filter): bool
     {
-        if(! $this->filter) {
+        if (! $this->filter) {
             return false;
         }
-        if(array_key_exists($filter, $this->filter)) {
+        if (array_key_exists($filter, $this->filter)) {
             return true;
         }
+
         return false;
     }
 
@@ -76,6 +79,7 @@ class QueryUrl
      *
      * @param $filter
      * @param $value
+     *
      * @return $this
      */
     public function setFilter($filter, $value)
@@ -85,10 +89,24 @@ class QueryUrl
         return $this;
     }
 
+    public function setFilters(array $filters)
+    {
+        if ($this->isAssociativeArray($filters)) {
+            foreach ($filters as $key => $value) {
+                $this->setFilter($key, $value);
+            }
+        } else {
+            throw new \InvalidArgumentException('The filters you put user are not in correct format, use associative arrays');
+        }
+
+        return $this;
+    }
+
     /**
      * The attribute to sort by.
      *
      * @param string $by
+     *
      * @return $this
      */
     public function sortBy(string $by)
@@ -104,6 +122,7 @@ class QueryUrl
 
         return $this;
     }
+
     /**
      * Reverse the order of a sort/
      *
@@ -111,10 +130,10 @@ class QueryUrl
      */
     public function reserveSort()
     {
-        if($this->sort[0] === '-') {
+        if ($this->sort[0] === '-') {
             $this->sort = str_replace('-', '', $this->sort);
         }
-        $this->sort = '-' . $this->sort;
+        $this->sort = '-'.$this->sort;
 
         return $this;
     }
@@ -125,8 +144,17 @@ class QueryUrl
      */
     public function build()
     {
-        $entities = ['%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%2F', '%3F', '%25', '%23', '%5B', '%5D'];
+        $entities = [
+            '%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%2F', '%3F',
+            '%25', '%23', '%5B', '%5D',
+        ];
         $replacements = ['!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "+", "$", ",", "/", "?", "%", "#", "[", "]"];
-        return request()->url() . '/?'. str_replace($entities, $replacements, http_build_query( (array) $this));
+
+        return request()->url().'/?'.str_replace($entities, $replacements, http_build_query((array) $this));
+    }
+
+    private function isAssociativeArray(array $input)
+    {
+        return array_keys($input) !== range(0, count($input) - 1);
     }
 }
