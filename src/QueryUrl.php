@@ -91,7 +91,7 @@ class QueryUrl
      * @param string $by
      * @return $this
      */
-    public function sort(string $by)
+    public function sortBy(string $by)
     {
         $this->sort = $by;
 
