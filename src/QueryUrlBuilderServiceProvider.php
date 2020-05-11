@@ -13,7 +13,7 @@ class QueryUrlBuilderServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('query-url-builder', function ($app) {
+        $this->app->bind(QueryUrlBuilder::class, function ($app) {
             return new QueryUrlBuilder();
         });
     }
