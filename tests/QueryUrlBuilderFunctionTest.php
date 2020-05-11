@@ -26,6 +26,13 @@ class QueryUrlBuilderFunctionTest extends TestCase
 
         $url = QueryUrl::forUrl('this/then/that')->build();
 
-        $this->assertStringContainsString($forUrl, "{$url}?");
+        $this->assertStringContainsString("{$forUrl}?", $url);
+    }
+
+    public function testForUrlAcceptsNamedRoute()
+    {
+        $url = QueryUrl::forUrl('query-url-builder.named.route')->build();
+
+        $this->assertStringContainsString('query-url-builder/test/route?', $url);
     }
 }
