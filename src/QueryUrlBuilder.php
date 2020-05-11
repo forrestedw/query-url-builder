@@ -140,6 +140,47 @@ class QueryUrlBuilder
     }
 
     /**
+     * Adds multiple filters to the query.
+     *
+     * @param array $filters
+     *
+     * @return $this
+     */
+    public function setFilters(array $filters)
+    {
+        if ($this->isAssociativeArray($filters)) {
+            foreach ($filters as $key => $value) {
+                $this->setFilter($key, $value);
+            }
+        } else {
+            throw new \InvalidArgumentException('The filters you put user are not in correct format, use associative arrays');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Removes multiple filters from a query.
+     *
+     * @param $filters
+     *
+     * @return $this
+     */
+    public function removeFilters($filters)
+    {
+        if ($this->isAssociativeArray($filters)) {
+            $filters = array_keys($filters);
+        }
+
+        foreach ($filters as $filter) {
+            $this->removeFilter($filter);
+        }
+
+        return $this;
+    }
+
+
+        /**
      *
      * @return mixed
      */
@@ -153,5 +194,17 @@ class QueryUrlBuilder
             unset($queryData['url']);
         }
         return ($this->url ?? request()->url()) . '/?'. str_replace($entities, $replacements, http_build_query($queryData));
+    }
+
+    /**
+     * Checks if array is of type associative or sequential.
+     *
+     * @param array $input
+     *
+     * @return bool
+     */
+    private function isAssociativeArray(array $input)
+    {
+        return array_keys($input) !== range(0, count($input) - 1);
     }
 }
