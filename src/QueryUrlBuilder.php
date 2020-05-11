@@ -87,12 +87,12 @@ class QueryUrlBuilder
      *
      * @return $this
      */
-    public function forUrl(string $urlOrNamedRoute, array $params = [])
+    public function forUrl(string $urlOrNamedRoute, $params = [])
     {
         $this->url = url($urlOrNamedRoute);
 
         if(Route::has($urlOrNamedRoute)){
-            $this->url = route($urlOrNamedRoute, $params);
+            $this->url = route($urlOrNamedRoute, (array)$params);
         }
 
         return $this;

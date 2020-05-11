@@ -19,4 +19,9 @@ class QueryUrlBuilderFunctionTest extends TestCase
         // second query url should not contain 'active'
         $this->assertStringNotContainsString('active', $secondQueryUrl);
     }
+
+    public function testForUrlAcceptsPlainUrl()
+    {
+        dd(QueryUrl::forUrl('google.com')->build());
+    }
 }
