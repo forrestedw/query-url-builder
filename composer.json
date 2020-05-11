@@ -28,7 +28,10 @@
         "laravel": {
             "providers": [
                 "Forrestedw\\QueryUrlBuilder\\QueryUrlBuilderServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "QueryUrl": "Forrestedw\\QueryUrlBuilder\\QueryUrl"
+            }
         }
     }
 }
