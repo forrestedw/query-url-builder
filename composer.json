@@ -23,5 +23,12 @@
             "Forrestedw\\QueryUrlBuilder\\": "src/",
             "Forrestedw\\QueryUrlBuilder\\Test\\": "tests/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Forrestedw\\QueryUrlBuilder\\QueryUrlBuilderServiceProvider"
+            ]
+        }
     }
 }
