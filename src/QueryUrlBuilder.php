@@ -4,6 +4,8 @@
 namespace Forrestedw\QueryUrlBuilder;
 
 
+use Illuminate\Support\Facades\Route;
+
 class QueryUrlBuilder
 {
     /**
@@ -86,12 +88,12 @@ class QueryUrlBuilder
      *
      * @return $this
      */
-    public function forUrl(string $url, bool $namedRoute = false, array $params = [])
+    public function forUrl(string $urlOrNamedRoute, array $params = [])
     {
-        $this->url = url($url);
-
-        if($namedRoute){
-            $this->url = route($url, $params);
+        if(Route::has($urlOrNamedRoute)){
+            $this->url = route($urlOrNamedRoute, $params);
+        } else {
+            $this->url = url($urlOrNamedRoute);
         }
 
         return $this;
