@@ -1,6 +1,6 @@
 # Easy query url building
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/forrestedw/query-url-builder/Test/add-testing-action?logo=github)
+![Packagist Version](https://img.shields.io/packagist/v/forrestedw/query-url-builder)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/forrestedw/query-url-builder/Test/add-testing-action?logo=github)
 
 This packages makes it easy to make the links necessary for use in the front en with [spatie/laravel-query-builder](https://docs.spatie.be/laravel-query-builder). The package is amazing helpful for the back end, and the front end is outside of the scope of the project. Creating the links for the front end can be verbose. This package makes it easy.
 
