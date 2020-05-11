@@ -83,7 +83,7 @@ class QueryUrlBuilder
      * Sets a custom url to apply filters on.
      *
      * @param string $urlOrNamedRoute
-     * @param array $params
+     * @param array|int|string $namedRouteParams
      *
      * @return $this
      */
