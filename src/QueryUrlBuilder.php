@@ -82,18 +82,17 @@ class QueryUrlBuilder
     /**
      * Sets a custom url to apply filters on.
      *
-     * @param string $url
-     * @param bool $namedRoute     *
+     * @param string $urlOrNamedRoute
      * @param array $params
      *
      * @return $this
      */
     public function forUrl(string $urlOrNamedRoute, array $params = [])
     {
+        $this->url = url($urlOrNamedRoute);
+
         if(Route::has($urlOrNamedRoute)){
             $this->url = route($urlOrNamedRoute, $params);
-        } else {
-            $this->url = url($urlOrNamedRoute);
         }
 
         return $this;
@@ -201,7 +200,7 @@ class QueryUrlBuilder
         if($this->url){
             unset($queryData['url']);
         }
-        return ($this->url ?? request()->url()) . '/?'. str_replace($entities, $replacements, http_build_query($queryData));
+        return ($this->url ?? request()->url()) . '?'. str_replace($entities, $replacements, http_build_query($queryData));
     }
 
     /**
