@@ -17,6 +17,6 @@ class QueryUrlBuilderFunctionTest extends TestCase
         $secondQueryUrl = QueryUrl::setFilter('value', true)->build();
 
         // second query url should not contain 'active'
-        $this->assertNotContains('active', $secondQueryUrl);
+        $this->assertStringNotContainsString('active', $secondQueryUrl);
     }
 }

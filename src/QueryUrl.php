@@ -18,6 +18,8 @@ class QueryUrl extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'query-url-builder';
+        self::clearResolvedInstance(QueryUrlBuilder::class);
+
+        return QueryUrlBuilder::class;
     }
 }
