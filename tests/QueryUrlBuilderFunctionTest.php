@@ -22,6 +22,10 @@ class QueryUrlBuilderFunctionTest extends TestCase
 
     public function testForUrlAcceptsPlainUrl()
     {
-        dd(QueryUrl::forUrl('google.com')->build());
+        $forUrl = 'this/then/that';
+
+        $url = QueryUrl::forUrl('this/then/that')->build();
+
+        $this->assertStringContainsString($forUrl, "{$url}?");
     }
 }
