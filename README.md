@@ -171,7 +171,7 @@ ____
 
 
 # Next steps
-I plan to add blade components that will look a bit like then following two examples, which would generate the two sets of example blade links above:
+Add blade components that will look a bit like then following two examples, which would generate the two sets of example blade links above:
 
 ```php
 <x-query-url-links :type="sort" :attribute="name" :base-class="btn rounded ml-3" :active="btn-primary shadow-sm" :inactive="btn-secondary" />
