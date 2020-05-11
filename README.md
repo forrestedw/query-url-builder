@@ -95,6 +95,21 @@ QueryUrl::removeFilter('active')->build(); // http://example.test/?&filter[valid
 QueryUrl::add('active', true)->sortBy('-email')->build(); // http://example.test/?&filter[active]=1&sort=-email, ie active users sorted by email DESC
 ```
 
+#### forUrl()
+By default, `QueryUrl` returns the new query params for the route you are already on:
+```php
+// On page http://example.test/
+
+QueryUrl::setFilter('someFilter',true)->build(); // http://example.test/?filter=[someFilter]=1
+```
+If you need a different url, use `forUrl()`. It accepts plain urls or named routes
+```php
+// On page http://example.test/
+
+QueryUrl::forUrl('google.com')->setFilter('someFilter',true)->build(); // http://google.com/?filter=[someFilter]=1
+
+QueryUrl::forUrl('project.show', ['project_id' => 1])->setFilter('someFilter',true)->build(); // http://example.test/projects/1?filter=[someFilter]=1
+```
 ____
 
 
