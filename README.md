@@ -70,6 +70,16 @@ QueryUrl::setFilter('active', false)->build() // http://example.test/?filter[act
 
 QueryUrl::setFilter('active', true)->setFilter('valid', false)->setFilter('name','John')->build() // returns http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
 ```
+Filters can also be set using an associative array:
+
+```php
+$array = [
+    'active' => false,
+    'valid' => true,
+];
+
+QueryUrl::setFilters($filters)->build() // http://example.test/?filter[active]=0&filter[valid]=1
+```
 
 #### Remove a filter
 ```php
