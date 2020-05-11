@@ -81,16 +81,17 @@ class QueryUrlBuilder
      * Sets a custom url to apply filters on.
      *
      * @param string $url
-     * @param bool $namedRoute
+     * @param bool $namedRoute     *
+     * @param array $params
      *
      * @return $this
      */
-    public function forUrl(string $url, bool $namedRoute = false)
+    public function forUrl(string $url, bool $namedRoute = false, array $params = [])
     {
         $this->url = url($url);
 
         if($namedRoute){
-            $this->url = route($url);
+            $this->url = route($url, $params);
         }
 
         return $this;

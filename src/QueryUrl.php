@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static QueryUrlBuilder filter(string $filter)
- * @method static QueryUrlBuilder forUrl(string $url, bool $namedRoute = false)
+ * @method static QueryUrlBuilder forUrl(string $url, bool $namedRoute = false, array $params = [])
  * @method static QueryUrlBuilder removeFilter(string $filter)
  * @method static QueryUrlBuilder hasFilter(string $filter)
  * @method static QueryUrlBuilder setFilter(string $filter, $value)
