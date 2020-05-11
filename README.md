@@ -73,7 +73,7 @@ QueryUrl::setFilter('active', true)->setFilter('valid', false)->setFilter('name'
 Filters can also be set using an associative array:
 
 ```php
-$array = [
+$filters = [
     'active' => false,
     'valid' => true,
 ];
