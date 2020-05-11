@@ -11,54 +11,45 @@ $ composer require forrestedw\query-url-builder
 
 
 ## Basic usage
-For greatest convenience, create a helper function:
+For greatest convenience, use it from the facade.
 ```php
-if(! function_exists('queryUrl')) {
-    function queryUrl()
-    {
-        return (new \Forrestedw\QueryUrlBuilder\QueryUrl);
-    }
-}
-```
-Then use it like this:
-```php 
-$queryUrl = queryUrl();
+use Forrestedw\QueryUrlBuilder\QueryUrl;
 ```
 
 ### Sort
 #### Set a sort
 ```php
-queryUrl()->sortBy('name')->build(); // http://example.test/?sort=name, ie name ASC
+QueryUrl::sortBy('name')->build(); // http://example.test/?sort=name, ie name ASC
 
-queryUrl()->sortBy('-name')->build(); // http://example.test/?sort=-name, ie name DESC
+QueryUrl::sortBy('-name')->build(); // http://example.test/?sort=-name, ie name DESC
 ```
 
 #### Access the sort
 ```php
 // On page  http://example.test/?sort=name
 
-queryUrl()->sort === 'name' // true
+QueryUrl::sort === 'name' // true
 
-queryUrl()->sort === '-name' // false
+QueryUrl::sort === '-name' // false
 ```
 
 #### Reverse the sort
 ```php
 // On page http://example.test/?sort=name
 
-queryUrl()->reverseSort()->build(); // http://example.test/?sort=-name, ie ASC goes to DESC
+QueryUrl::reverseSort()->build(); // http://example.test/?sort=-name, ie ASC goes to DESC
 
 
 // On page http://example.test/?sort=-name 
 
-queryUrl()->reverseSort()->build(); // http://example.test/?sort=name, ie DESC goes to ASC
+QueryUrl::reverseSort()->build(); // http://example.test/?sort=name, ie DESC goes to ASC
 ```
 
 #### Remove a sort
 ```php
 // On page http://example.test/?sort=name
 
-queryUrl()->removeSort()->build(); // http://example.test/
+QueryUrl::removeSort()->build(); // http://example.test/
 ```
 
 ### Filter
@@ -66,32 +57,32 @@ queryUrl()->removeSort()->build(); // http://example.test/
 ```php
 // On page http://example.test/?filter[name]=Joe
 
-queryUrl()->hasFilter('name') // true
+QueryUrl::hasFilter('name') // true
 
-queryUrl()->hasFilter('email') // false
+QueryUrl::hasFilter('email') // false
 ```
 
 #### Set filters
 ```php
-queryUrl()->setFilter('active', true)->build() // http://example.test/?filter[active]=1
+QueryUrl::setFilter('active', true)->build() // http://example.test/?filter[active]=1
 
-queryUrl()->setFilter('active', false)->build() // http://example.test/?filter[active]=0
+QueryUrl::setFilter('active', false)->build() // http://example.test/?filter[active]=0
 
-queryUrl()->setFilter('active', true)->setFilter('valid', false)->setFilter('name','John')->build() // returns http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
+QueryUrl::setFilter('active', true)->setFilter('valid', false)->setFilter('name','John')->build() // returns http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
 ```
 
 #### Remove a filter
 ```php
 // On page http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
 
-queryUrl()->removeFilter('active')->build(); // http://example.test/?&filter[valid]=0&filter[name]=John
+QueryUrl::removeFilter('active')->build(); // http://example.test/?&filter[valid]=0&filter[name]=John
 ```
 
 #### Combine various `sort` and `filter` options
 ```php
 // On page http://example.test/?filter[active]=1&filter[valid]=0&filter[name]=John
 
-queryUrl()->add('active', true)->sortBy('-email')->build(); // http://example.test/?&filter[active]=1&sort=-email, ie active users sorted by email DESC
+QueryUrl::add('active', true)->sortBy('-email')->build(); // http://example.test/?&filter[active]=1&sort=-email, ie active users sorted by email DESC
 ```
 
 ____
@@ -109,17 +100,17 @@ The following example will create a link that cycles through three states of bei
 
 
 ```php
-@if(queryUrl()->sort === 'name')
+@if(QueryUrl::sort === 'name')
 
-    <a href="{{ queryUrl()->reserveSort()->build() }}">Name - showing A-Z</a>
+    <a href="{{ QueryUrl::reserveSort()->build() }}">Name - showing A-Z</a>
 
-@elseif(queryUrl()->sort === '-name')
+@elseif(QueryUrl::sort === '-name')
 
-    <a href="{{ queryUrl()->removeSort()->build() }}">Name - showing Z-A</a>
+    <a href="{{ QueryUrl::removeSort()->build() }}">Name - showing Z-A</a>
 
 @else
 
-    <a href="{{ queryUrl()->sortBy('name')->build() }}">Name - showing unsorted</a>
+    <a href="{{ QueryUrl::sortBy('name')->build() }}">Name - showing unsorted</a>
 
 @endif
 ```
@@ -133,17 +124,17 @@ A similar approach is taken for boolean value filtering, and cycling through the
 3. Show all
 
 ```php
-@if(! queryUrl()->hasFilter('active'))
+@if(! QueryUrl::hasFilter('active'))
 
-    <a href="{{ queryUrl()->setFilter('active', true)->build() }}">Active - showing all (no filter applied)</a>
+    <a href="{{ QueryUrl::setFilter('active', true)->build() }}">Active - showing all (no filter applied)</a>
 
-@elseif(queryUrl()->filter('active') === true)
+@elseif(QueryUrl::filter('active') === true)
 
-    <a href="{{ queryUrl()->setFilter('active', false)->build() }}">Active - showing true only</a>
+    <a href="{{ QueryUrl::setFilter('active', false)->build() }}">Active - showing true only</a>
 
 @else
 
-    <a href="{{ queryUrl()->removeFilter('active')->build() }}">Active - showing false only</a>
+    <a href="{{ QueryUrl::removeFilter('active')->build() }}">Active - showing false only</a>
 
 @endif
 ```
