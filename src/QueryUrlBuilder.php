@@ -18,6 +18,12 @@ class QueryUrlBuilder
      */
     public $sort;
 
+    /**
+     * The url to use build url on.
+     * @var string
+     */
+    public $url;
+
     public function __construct()
     {
         $query = request()->query();
@@ -69,6 +75,20 @@ class QueryUrlBuilder
             return true;
         }
         return false;
+    }
+
+    /**
+     * Sets a custom url to apply filters on.
+     *
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function forUrl(string $url)
+    {
+        $this->url = url($url);
+
+        return $this;
     }
 
     /**
@@ -127,6 +147,11 @@ class QueryUrlBuilder
     {
         $entities = ['%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%2F', '%3F', '%25', '%23', '%5B', '%5D'];
         $replacements = ['!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "+", "$", ",", "/", "?", "%", "#", "[", "]"];
-        return request()->url() . '/?'. str_replace($entities, $replacements, http_build_query( (array) $this));
+
+        $queryData = (array) $this;
+        if($this->url){
+            unset($queryData['url']);
+        }
+        return ($this->url ?? request()->url()) . '/?'. str_replace($entities, $replacements, http_build_query($queryData));
     }
 }
