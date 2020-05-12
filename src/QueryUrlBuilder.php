@@ -113,6 +113,16 @@ class QueryUrlBuilder
     }
 
     /**
+     * Get the current sort value.
+     *
+     * @return string|null
+     */
+    public function getSort()
+    {
+        return $this->sort;
+    }
+
+    /**
      * The attribute to sort by.
      *
      * @param string $by

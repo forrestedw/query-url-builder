@@ -1,14 +1,14 @@
 
-@if(QueryUrl::sort === $sort)
+@if(QueryUrl::getSort() === $sortAttribute)
 
-    <a href="{{ QueryUrl::reserveSort()->build() }}">{{ $sort }}, asc</a>
+    <a href="{{ QueryUrl::reserveSort()->build() }}">{{ $sortDisplay }}, asc</a>
 
-@elseif(QueryUrl::sort === "-{$sort}")
+@elseif(QueryUrl::getSort() === "-{$sortAttribute}")
 
-    <a href="{{ QueryUrl::removeSort()->build() }}">{{ $sort }}, desc</a>
+    <a href="{{ QueryUrl::removeSort()->build() }}">{{ $sortDisplay }}, desc</a>
 
 @else
 
-    <a href="{{ QueryUrl::sortBy($sort)->build() }}">{{ $sort }}</a>
+    <a href="{{ QueryUrl::sortBy($sortAttribute)->build() }}">{{ $sortDisplay }}</a>
 
 @endif
