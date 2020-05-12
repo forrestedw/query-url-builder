@@ -128,11 +128,11 @@ The following example will create a link that cycles through three states of bei
 
 
 ```php
-@if(QueryUrl::sort === 'name')
+@if(QueryUrl::getSort() === 'name')
 
     <a href="{{ QueryUrl::reserveSort()->build() }}">Name - showing A-Z</a>
 
-@elseif(QueryUrl::sort === '-name')
+@elseif(QueryUrl::getSort() === '-name')
 
     <a href="{{ QueryUrl::removeSort()->build() }}">Name - showing Z-A</a>
 
@@ -154,29 +154,29 @@ A similar approach is taken for boolean value filtering, and cycling through the
 ```php
 @if(! QueryUrl::hasFilter('active'))
 
-    <a href="{{ QueryUrl::setFilter('active', true)->build() }}">Active - showing all (no filter applied)</a>
+    <a href="{{ QueryUrl::setFilter('active', true)->build() }}">Active - all</a>
 
 @elseif(QueryUrl::filter('active') === true)
 
-    <a href="{{ QueryUrl::setFilter('active', false)->build() }}">Active - showing true only</a>
+    <a href="{{ QueryUrl::setFilter('active', false)->build() }}">Active</a> // currently showing true only
 
 @else
 
-    <a href="{{ QueryUrl::removeFilter('active')->build() }}">Active - showing false only</a>
+    <a href="{{ QueryUrl::removeFilter('active')->build() }}">Active</a>  // currently showing true only
 
 @endif
 ```
 
-____
-
-
-# Next steps
-Add blade components that will look a bit like then following two examples, which would generate the two sets of example blade links above:
+#### Blade components
+For ease, the two above trios of if-else links can be outputted using the following, respectively:
 
 ```php
-<x-query-url-links :type="sort" :attribute="name" :base-class="btn rounded ml-3" :active="btn-primary shadow-sm" :inactive="btn-secondary" />
+<x-queryUrl-sort sort="First Name"/>
 
-<x-query-url-links :type="boolFilter" :attribute="active" :base-class="btn rounded ml-3" :active="btn-primary shadow-sm" :inactive="btn-secondary" />
+<x-queryUrl-bool-filter filter="active"/>
 ```
+Behind the scenes the `sort` or `filter` attribute is handled to snake case it for the attribute in question. For example, the sort example displays `First Name` (exactly as passed) but sorts for `first_name`.
+
+___
 
 
