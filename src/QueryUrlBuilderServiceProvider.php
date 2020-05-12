@@ -30,8 +30,9 @@ class QueryUrlBuilderServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/resources/views', 'forrestedw');
 
         $this->loadViewComponentsAs('queryUrl', [
-            Sort::class,
             BoolFilter::class,
+            Search::class,
+            Sort::class,
         ]);
     }
 }
