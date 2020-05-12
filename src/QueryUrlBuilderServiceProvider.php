@@ -26,5 +26,11 @@ class QueryUrlBuilderServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__.'/routes.php');
+
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'forrestedw');
+
+        $this->loadViewComponentsAs('queryUrl', [
+            Sort::class,
+        ]);
     }
 }
