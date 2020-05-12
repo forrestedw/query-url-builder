@@ -31,6 +31,7 @@ class QueryUrlBuilderServiceProvider extends ServiceProvider
 
         $this->loadViewComponentsAs('queryUrl', [
             Sort::class,
+            BoolFilter::class,
         ]);
     }
 }

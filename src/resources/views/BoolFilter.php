@@ -5,19 +5,18 @@ namespace Forrestedw\QueryUrlBuilder;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
-class Sort extends Component
+class BoolFilter extends Component
 {
-    public $sortAttribute, $sortDisplay;
-
+    public $filterAttribute, $filterDisplay;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $sort)
+    public function __construct($filter)
     {
-        $this->sortAttribute = Str::snake($sort);
-        $this->sortDisplay = $sort;
+        $this->filterAttribute = Str::snake($filter);
+        $this->filterDisplay = $filter;
     }
 
     /**
@@ -27,6 +26,6 @@ class Sort extends Component
      */
     public function render()
     {
-        return view('forrestedw::components.sort');
+        return view('forrestedw::components.bool-filter');
     }
 }
