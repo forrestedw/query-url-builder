@@ -263,8 +263,8 @@ class QueryUrlBuilder
             unset($queryData['url']);
         }
         
-        // clear empty filters
-        if(array_key_exists('filter', $queryData)) {
+        // clear empty filters. From github.
+        if(array_key_exists('filter', $queryData) && $queryData['filter'] !== null) {
             foreach($queryData['filter'] as $key => $value) {
                 if ($queryData['filter'][$key] == '') {
                     unset($queryData['filter'][$key]);
