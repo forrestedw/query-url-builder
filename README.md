@@ -6,7 +6,7 @@ This packages makes it easy to make the links necessary for use in the front en 
 
 ## Installation
 ```bash
-$ composer require forrestedw\query-url-builder
+$ composer require forrestedw/query-url-builder
 ```
 
 
