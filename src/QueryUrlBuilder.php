@@ -111,6 +111,58 @@ class QueryUrlBuilder
 
         return $this;
     }
+    
+     /**
+     * Adds a value to a filter. eg:
+     * filter[x]=foo
+     * addToFilter(x,bar)
+     * filter[x]=foo,bar
+     * 
+     * Accepts values as array or string
+     *
+     * @param string $filter
+     * @param array|string $values
+     * @return $this
+     */
+    public function addToFilter($filter, $values)
+    {
+        if (! is_array($values)) {
+            $values = [$values];
+        }
+        
+        foreach($values as $value) {
+            if (!in_array($value, explode(',', $this->filter[$filter]))) {
+                $this->filter[$filter] = $this->filter[$filter] . ',' . $value;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Reverses addToFilter.
+     * 
+     * @param string $filter
+     * @param array|string $values
+     * @return $this
+     */
+    public function removeFromFilter($filter, $values)
+    {
+        if (! is_array($values)) {
+            $values = [$values];
+        }
+        
+        foreach($values as $value) {
+            $filterValuesAsArray = explode(',' , $this->filter[$filter]);
+
+            if (($key = array_search($value, $filterValuesAsArray)) !== false) {
+                unset($filterValuesAsArray[$key]);
+                $this->filter[$filter] = implode(',', $filterValuesAsArray);
+            }            
+        }
+        return $this;
+    }
+
 
     /**
      * Get the current sort value.
@@ -210,6 +262,16 @@ class QueryUrlBuilder
         if($this->url){
             unset($queryData['url']);
         }
+        
+        // clear empty filters
+        if(array_key_exists('filter', $queryData)) {
+            foreach($queryData['filter'] as $key => $value) {
+                if ($queryData['filter'][$key] == '') {
+                    unset($queryData['filter'][$key]);
+                };
+            }
+        }
+        
         return ($this->url ?? request()->url()) . '?'. str_replace($entities, $replacements, http_build_query($queryData));
     }
 
