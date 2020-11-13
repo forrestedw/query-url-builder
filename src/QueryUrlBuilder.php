@@ -265,11 +265,14 @@ class QueryUrlBuilder
         
         // clear empty filters. From github.
         if(array_key_exists('filter', $queryData) && $queryData['filter'] !== null) {
-            foreach($queryData['filter'] as $key => $value) {
-                if ($queryData['filter'][$key] == '') {
-                    unset($queryData['filter'][$key]);
-                };
+            if($queryData['filter']) { //handle null values for filter
+		    foreach($queryData['filter'] as $key => $value) {
+			if ($queryData['filter'][$key] == '') {
+			    unset($queryData['filter'][$key]);
+			};
+		    }            
             }
+
         }
         
         return ($this->url ?? request()->url()) . '?'. str_replace($entities, $replacements, http_build_query($queryData));
